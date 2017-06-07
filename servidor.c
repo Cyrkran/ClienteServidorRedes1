@@ -3,7 +3,7 @@ Autor: Fernando Krein Pinheiro
 Data: 04/07/2012
 Linguagem: C
 ========= IMPORTANTE ===========
-O código esta livre para usar,
+O cï¿½digo esta livre para usar,
 citar e compartilhar desde que
 mantida sua fonte e seu autor.
 Obrigado.
@@ -19,7 +19,7 @@ Obrigado.
 #include <arpa/inet.h>
 #include <sys/ioctl.h>
 #include <pthread.h>
- 
+
 void* Servidor(void* arg)
 {
     /*Buffer de entrada (armazena buffer do cliente)*/
@@ -35,18 +35,18 @@ void* Servidor(void* arg)
         if (strcmp(buffer_do_cliente, "sair") != 0)
         {
             /*Se buffer == sair cai fora*/
-            printf("%s\n",buffer_do_cliente);
+            printf("%s \t %d\n",buffer_do_cliente, sockEntrada);
         }
         else
-		{
-			/*Encerra o descritor*/
-			close(sockEntrada);
-			/*Encerra a thread*/
-			pthread_exit((void*) 0);
-		}
+    		{
+    			/*Encerra o descritor*/
+    			close(sockEntrada);
+    			/*Encerra a thread*/
+    			pthread_exit((void*) 0);
+    		}
     }
 }
- 
+
 int configuracaoServidor()
 {
     /*Cria o descritor*/
@@ -81,7 +81,7 @@ int configuracaoServidor()
     }
     return sockfd;
 }
- 
+
 int main()
 {
     system("clear");
@@ -89,7 +89,7 @@ int main()
     struct sockaddr_in serverAddr;
     /*Retorna da funcao e o descritor*/
     int sockfd = configuracaoServidor();
- 
+
     /*Loop "infinito"*/
     while (1)
     {
@@ -103,16 +103,16 @@ int main()
     /*Fica no aguardo da conexao do cliente*/
         if ((clienteSockfd = accept(sockfd, (struct sockaddr *) & clienteAddr, &clntLen)) < 0)
         {
-      printf("Erro no Socket\n");
-      exit(1);
-    }
+          printf("Erro no Socket\n");
+          exit(1);
+        }
         /*Inicializa a thread*/
         if (pthread_create(&thread, NULL, Servidor, &clienteSockfd) != 0)
        {
             printf("Erro na Thread\n");
             exit(1);
        }
- 
+
         pthread_detach(thread);
     }
     exit(0);
